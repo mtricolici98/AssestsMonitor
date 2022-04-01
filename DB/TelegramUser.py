@@ -1,4 +1,4 @@
-from database import Base, Session
+from DB.database import Base, Session
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Date, Text
 
@@ -40,16 +40,14 @@ class TelegramUser(Base):
         session = Session()  # Create new session
         session.add(my_user)  # Add user to the session
         session.commit()  # Save changes to the database
+        session.close()
 
         return my_user
 
     @staticmethod
     def get_user(id):
         session = Session()
-        my_user = session.query(id).filter(TelegramUser.id == id).one()
-        if my_user:
-            return my_user
-        else:
-            return None
+        return None if session.query(TelegramUser).count() == 0 else session.query(TelegramUser).filter(TelegramUser.id == id).one()
+
 
 Base.metadata.create_all()
