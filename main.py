@@ -1,4 +1,3 @@
-import os
 import telebot
 from constants import TEl_BOT_KEY
 
