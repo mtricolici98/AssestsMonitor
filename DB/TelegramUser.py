@@ -19,34 +19,4 @@ class TelegramUser(Base):
     def __str__(self):
         return repr(self)
 
-    @staticmethod
-    def find_or_register_new_user(id, first_name, last_name, binance_key):
-        user = TelegramUser.get_user(id)
-        if user != None:
-            return user
-        else:
-            return TelegramUser.register_new_user(id, first_name, last_name, binance_key)
-
-    @staticmethod
-    def register_new_user(id, first_name, last_name, binance_key):
-        my_user = TelegramUser(
-            id=id,
-            first_name=first_name,
-            last_name=last_name,
-            binance_key=binance_key,
-            registration_date=datetime.now()
-        )
-
-        session = Session()  # Create new session
-        session.add(my_user)  # Add user to the session
-        session.commit()  # Save changes to the database
-        session.close()
-
-        return my_user
-
-    @staticmethod
-    def get_user(id):
-        session = Session()
-        return None if session.query(TelegramUser).count() == 0 else session.query(TelegramUser).filter(TelegramUser.id == id).one()
-
 Base.metadata.create_all()
