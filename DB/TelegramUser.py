@@ -49,5 +49,4 @@ class TelegramUser(Base):
         session = Session()
         return None if session.query(TelegramUser).count() == 0 else session.query(TelegramUser).filter(TelegramUser.id == id).one()
 
-
 Base.metadata.create_all()
